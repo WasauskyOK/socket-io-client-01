@@ -184,9 +184,38 @@ export default class  Globalchat extends Component {
             "textAlign":"center"
         }
     }
+    
+    async CerrarSesion(){
+            
+        await  localStorage.setItem("setAuthenticated",false);
+        await localStorage.clear();
+        sessionStorage.clear();  
+        
+        //window.localStorage.clear();
+          this.props.history.push('/signin');
+          //window.location.href="/signin";
+      }
     render() {
+        if(localStorage.getItem("setAuthenticated")===null){
+            console.log("gaaaa");
+            return <Redirect to='/signin'></Redirect>
+        }; 
         return (
+
             <div className="container">
+              
+              <div>
+                  <div className="d-flex bd-highlight bg-danger  mb-3 ">
+                    <div className="mr-auto p-2 "><Link className="nav-link text-white" to="/profile">Profile</Link></div>
+                        <div className="p-2 bd-highlight">
+                            <button className="btn btn-danger text-white" onClick={this.CerrarSesion.bind(this)} >Cerrar Sesion</button>
+                        </div>
+
+                </div>
+                Hola a todos
+            </div>
+
+
                 {M.AutoInit()}
                 <div class="alert alert-primary mt-3 text-center bg-dark text-white"  role="alert">
                      <p>Example simple chat global (WasauskyOK)</p>
