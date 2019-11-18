@@ -33,7 +33,7 @@ export default class signup extends Component {
     AgregarUsuario(e){
         e.preventDefault();
         const {email,password}=this.state;
-        fetch("http://localhost:6543/signup",{
+        fetch("https://serverchatexample01.herokuapp.com/signup",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

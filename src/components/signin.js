@@ -19,7 +19,7 @@ export default class signin extends Component {
         IniciarSesion(e){
             e.preventDefault();
             const {email,password}=this.state;
-            fetch("http://localhost:6543/signin",{
+            fetch("https://serverchatexample01.herokuapp.com/signin",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
@@ -33,6 +33,7 @@ export default class signin extends Component {
                         //const isAuthenticate=data.isAuthenticate;
                         if(data.isAuthenticate===true){
                             window.localStorage.setItem('setAuthenticated',true);
+                            window.localStorage.setItem('correoactivo',data.email);
                             window.location.href="/profile";
                         }
                         //this.props.history.push('/profile');

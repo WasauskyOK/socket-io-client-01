@@ -5,7 +5,7 @@ import  Principal from  './components/principal';
 import  Signup from  './components/signup';
 import  Signin from  './components/signin';
 import  LayoutPrimaryNavigation from  './components/layoutsign';
-import  Profile from './components/profile';
+//import  Profile from './components/profile';
 import GlobalChat from './components/globalchat';
 function App() {
   return (

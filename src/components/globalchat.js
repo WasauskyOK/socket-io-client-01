@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import  ClientIO from 'socket.io-client';
 import  MessagesTotal from './messagestotal';
 import M from 'materialize-css';
+import {Redirect,Link} from 'react-router-dom';
 //import   'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css';
 
 //import { makeStyles } from '@material-ui/core/styles';
@@ -138,6 +139,7 @@ export default class  Globalchat extends Component {
     mensaje=React.createRef();
     componentDidMount(){
         
+        //this.clientIO=ClientIO("https://serverchatexample01.herokuapp.com/");
         this.clientIO=ClientIO("https://serverchatexample01.herokuapp.com/");
         this.clientIO.on("messageBroadcast",async(data)=>{
             if(data.status==="Running"){
@@ -150,7 +152,8 @@ export default class  Globalchat extends Component {
         // });
     }
     async UpdateMessages(){
-        const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
+       // const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
+       const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
         const  Messages=await  method.json();
         this.setState({Messages});
         console.log(this.state);
@@ -158,11 +161,12 @@ export default class  Globalchat extends Component {
     }
     async GoMessage(e){
         e.preventDefault();
-        const {email,msj}=this.state;
+        const {msj}=this.state;
+        const  email=window.localStorage.getItem("correoactivo");
         const hora=`${new Date().getHours().toPrecision().toString()}:${new Date().getMinutes().toPrecision().toString()}:${new Date().getSeconds().toPrecision().toString()}  ${new Date().toDateString().toString()}`;
        await this.clientIO.emit('messageGlobal',{email,msj,hora});
        this.mensaje.current.value="";
-       M.toast({html:`${apodo} acabas de agregar un nuevo mensaje`});
+       M.toast({html:`${email} acabas de agregar un nuevo mensaje`});
        this.UpdateMessages();
         
     }
@@ -203,21 +207,21 @@ export default class  Globalchat extends Component {
         return (
 
             <div className="container">
-              
+           
               <div>
                   <div className="d-flex bd-highlight bg-danger  mb-3 ">
-                    <div className="mr-auto p-2 "><Link className="nav-link text-white" to="/profile">Profile</Link></div>
+                          <div className="mr-auto p-2 "><Link className="nav-link text-white" to="/profile">Usuario  Activo : {window.localStorage.getItem("correoactivo")}</Link></div>
                         <div className="p-2 bd-highlight">
                             <button className="btn btn-danger text-white" onClick={this.CerrarSesion.bind(this)} >Cerrar Sesion</button>
                         </div>
 
                 </div>
-                Hola a todos
+            
             </div>
 
 
                 {M.AutoInit()}
-                <div class="alert alert-primary mt-3 text-center bg-dark text-white"  role="alert">
+                <div className="alert alert-primary mt-3 text-center bg-dark text-white"  role="alert">
                      <p>Example simple chat global (WasauskyOK)</p>
                      <p>contact : daniechoque159@gmail.com </p>
                 </div>
@@ -225,8 +229,8 @@ export default class  Globalchat extends Component {
                 <div className="row">
                     <div className="col-12">
                             
-                            <input type="email" name="email" className="form-control mb-4 col-8" placeholder="Ingresa tu correo" onChange={this.Changevars.bind(this)}/>
-                            
+                            {/* <input type="email" name="email" className="form-control mb-4 col-8" placeholder="Ingresa tu correo" onChange={this.Changevars.bind(this)}/>
+                             */}
                     </div>
                     
                 </div>

@@ -1,5 +1,5 @@
-import React from 'react'
-import  Navigation from  './navigation'
+import React from 'react';
+import  Navigation from  './navigation';
 
 const  layoutnavigationsignsignin=  (props)  =>{
 
