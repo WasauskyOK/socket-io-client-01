@@ -126,7 +126,7 @@ export default class  Globalchat extends Component {
         super();
         this.state={
             Messages:[],
-            apodo:"",
+            email:"",
             msj:""
         }
        
@@ -158,9 +158,9 @@ export default class  Globalchat extends Component {
     }
     async GoMessage(e){
         e.preventDefault();
-        const {apodo,msj}=this.state;
+        const {email,msj}=this.state;
         const hora=`${new Date().getHours().toPrecision().toString()}:${new Date().getMinutes().toPrecision().toString()}:${new Date().getSeconds().toPrecision().toString()}  ${new Date().toDateString().toString()}`;
-       await this.clientIO.emit('messageGlobal',{apodo,msj,hora});
+       await this.clientIO.emit('messageGlobal',{email,msj,hora});
        this.mensaje.current.value="";
        M.toast({html:`${apodo} acabas de agregar un nuevo mensaje`});
        this.UpdateMessages();
@@ -196,7 +196,7 @@ export default class  Globalchat extends Component {
                 <div className="row">
                     <div className="col-12">
                             
-                            <input type="text" name="apodo" className="form-control mb-4 col-8" placeholder="Ingresa tu apodo" onChange={this.Changevars.bind(this)}/>
+                            <input type="email" name="email" className="form-control mb-4 col-8" placeholder="Ingresa tu correo" onChange={this.Changevars.bind(this)}/>
                             
                     </div>
                     
