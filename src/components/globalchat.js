@@ -140,7 +140,7 @@ export default class  Globalchat extends Component {
     componentDidMount(){
         
         //this.clientIO=ClientIO("https://serverchatexample01.herokuapp.com/");
-        this.clientIO=ClientIO("https://serverchatexample01.herokuapp.com/");
+        this.clientIO=ClientIO("http://localhost:5000/");
         this.clientIO.on("messageBroadcast",async(data)=>{
             if(data.status==="Running"){
                  this.UpdateMessages();
@@ -153,8 +153,10 @@ export default class  Globalchat extends Component {
     }
     async UpdateMessages(){
        // const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
-       const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
-        const  Messages=await  method.json();
+       //const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
+       const method=await  fetch('http://localhost:5000/viewmessages');
+       
+       const  Messages=await  method.json();
         this.setState({Messages});
         console.log(this.state);
 
@@ -190,11 +192,33 @@ export default class  Globalchat extends Component {
     }
     
     async CerrarSesion(){
-            
+
+        const email=window.localStorage.getItem('correoactivo')
+        await fetch('http://localhost:5000/statusofflineuser',{
+            method:'PUT',
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify({email})
+        })
+        .then(async  data=>{
+            const {message}=await data.json();
+           
+            alert(message);
+        })
+        // .then(data=>{
+        //     alert(data.message);
+        // })
+        .catch(err=>{
+            alert(err.message);
+        });
+
         await  localStorage.setItem("setAuthenticated",false);
         await localStorage.clear();
         sessionStorage.clear();  
         
+       
+
         //window.localStorage.clear();
           this.props.history.push('/signin');
           //window.location.href="/signin";

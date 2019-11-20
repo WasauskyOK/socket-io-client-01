@@ -33,7 +33,8 @@ export default class signup extends Component {
     AgregarUsuario(e){
         e.preventDefault();
         const {email,password}=this.state;
-        fetch("https://serverchatexample01.herokuapp.com/signup",{
+        //fetch("https://serverchatexample01.herokuapp.com/signup",{
+        fetch("http://localhost:5000/signup",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -100,7 +101,7 @@ export default class signup extends Component {
                         <div className="card-body text-center">
                             <form onSubmit={this.AgregarUsuario.bind(this)}>
                                 <div className="form-group">
-                                    <input type="email" placeholder="Ingresa tu correo" value={this.state.email} name="email" onChange={this.CambiarState.bind(this)} required className="mt-3 form-control" />
+                                    <input type="email" placeholder="Ingresa tu correo" value={this.state.email} name="email" onChange={this.CambiarState.bind(this)} required className="mt-3 form-control" autoComplete="off"/>
                                 </div>
 
                                 <div className="form-group">
