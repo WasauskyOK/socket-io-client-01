@@ -186,7 +186,7 @@ export default class  Globalchat extends Component {
 
     async UpdateStateOffLineOnLine(){
         const email=window.localStorage.getItem("correoactivo");
-        const  data=await fetch(`https://serverchatexample01.herokuapp.com/${email}`);
+        const  data=await fetch(`https://serverchatexample01.herokuapp.com/liststatususer/${email}`);
         const StatusUsers=await  data.json();
         this.setState({StatusUsers});
 

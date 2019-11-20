@@ -9,7 +9,15 @@ export default class StatusUsersTotal extends Component {
                     return(
                         <li key={i} className="list-group-item d-flex justify-content-between align-items-center">
                     {item.email}
-                    <span className="badge badge-primary badge-pill">{item.status}</span>
+                    {
+                    (item.status==="online")
+                    ?
+                    <span className="badge" style={{color:"green"}}>{item.status}<i style={{color:"green",fontSize:"1.2rem"}} class="fas fa-user-alt"></i></span>
+                    :
+                    <span className="badge" style={{color:"red"}}>{item.status}<i style={{color:"red",fontSize:"1.2rem"}} class="fas fa-user-alt-slash"></i></span>
+                    
+                    }
+                   
                     </li>
                     )
                 })
