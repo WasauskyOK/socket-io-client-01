@@ -3,6 +3,7 @@ import  ClientIO from 'socket.io-client';
 import  MessagesTotal from './messagestotal';
 import M from 'materialize-css';
 import {Redirect,Link} from 'react-router-dom';
+import  ListUsersStatus  from './StatusUsersTotal';
 //import   'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css';
 
 //import { makeStyles } from '@material-ui/core/styles';
@@ -128,7 +129,8 @@ export default class  Globalchat extends Component {
         this.state={
             Messages:[],
             email:"",
-            msj:""
+            msj:"",
+            StatusUsers:[]
         }
        
         
@@ -138,19 +140,58 @@ export default class  Globalchat extends Component {
     }
     mensaje=React.createRef();
     componentDidMount(){
-        
+       
         //this.clientIO=ClientIO("https://serverchatexample01.herokuapp.com/");
         this.clientIO=ClientIO("http://localhost:5000/");
-        this.clientIO.on("messageBroadcast",async(data)=>{
+        this.UpdateStateOffLineOnLine();
+        this.clientIO.emit('updatestatusoffline',{opcion:"refreshstatuslist"});
+        this.clientIO.on('updateliststatus',async (data)=>{
+            if(data.status==="udpateGlobal"){
+                this.UpdateStateOffLineOnLine();
+            }
+        })
+       // this.ConfigurateStatus();//actualizar estados
+        this.clientIO.on("messageBroadcast",(data)=>{
+            
             if(data.status==="Running"){
+               
                  this.UpdateMessages();
+                
             }
         });
         this.UpdateMessages();
         // this.clientIO.on('gretting',(data)=>{
         //     console.log("Saludo  : "+data.message);
         // });
+       
     }
+    // async ConfigurateStatus(){
+      
+       
+
+    //   // this.clientIO.emit("pedirlistausuarios",{status:"GoLista"});
+
+    // //   await this.clientIO.emit("pedirlistausuarios",{status:"GoLista"});
+    // //   await this.clientIO.on("usuariosoffon",async (StatusUsers)=>{
+
+    // //      // await this.setState({StatusUsers});
+    // //     //  console.log("status state users",this.state.StatusUsers);
+    // //       console.log(StatusUsers);
+    // //       console.log("USUARIOS ACTIVOS E INACTIVOS");
+
+    // //   });
+
+        
+    // }
+
+    async UpdateStateOffLineOnLine(){
+        const email=window.localStorage.getItem("correoactivo");
+        const  data=await fetch(`http://localhost:5000/liststatususer/${email}`);
+        const StatusUsers=await  data.json();
+        this.setState({StatusUsers});
+
+    }
+
     async UpdateMessages(){
        // const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
        //const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
@@ -193,26 +234,27 @@ export default class  Globalchat extends Component {
     
     async CerrarSesion(){
 
-        const email=window.localStorage.getItem('correoactivo')
-        await fetch('http://localhost:5000/statusofflineuser',{
-            method:'PUT',
-            headers:{
-                "Content-Type":"application/json",
-            },
-            body:JSON.stringify({email})
-        })
-        .then(async  data=>{
-            const {message}=await data.json();
-           
-            alert(message);
-        })
-        // .then(data=>{
-        //     alert(data.message);
+        // const email=window.localStorage.getItem('correoactivo')
+        // await fetch('http://localhost:5000/statusofflineuser',{
+        //     method:'PUT',
+        //     headers:{
+        //         "Content-Type":"application/json",
+        //     },
+        //     body:JSON.stringify({email})
         // })
-        .catch(err=>{
-            alert(err.message);
-        });
-
+        // .then(async  data=>{
+        //     const {message}=await data.json();
+           
+        //     alert(message);
+        // })
+        // // .then(data=>{
+        // //     alert(data.message);
+        // // })
+        // .catch(err=>{
+        //     alert(err.message);
+        // });
+        const  email=window.localStorage.getItem("correoactivo");
+        await  this.clientIO.emit('updatestatusoffline',{email,opcion:"offline"});
         await  localStorage.setItem("setAuthenticated",false);
         await localStorage.clear();
         sessionStorage.clear();  
@@ -258,7 +300,21 @@ export default class  Globalchat extends Component {
                     </div>
                     
                 </div>
-                <MessagesTotal ArrayMessages={this.state.Messages}/>
+          <div className="" style={{width:"100vw"}}>
+            
+                 <div className="col-4">
+                 <ListUsersStatus arregloListaUsuarios={this.state.StatusUsers}/>
+                 </div>
+                 <div className="col-8">
+                 <MessagesTotal ArrayMessages={this.state.Messages}/>
+                 </div>
+
+             
+          </div>
+                 
+               
+               
+               
                 <div className="row">
                     <div className="col-12">
                         <div style={{height:"15vh"}} className="form-group">

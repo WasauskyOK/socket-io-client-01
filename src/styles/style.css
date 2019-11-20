@@ -1,0 +1,27 @@
+:root{
+    --color:white;
+}
+
+.content-mensajes{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.content-mensajes::-webkit-scrollbar{
+    /*
+    
+    Modificando el scroll
+    */
+    position: relative;
+    width: 15px;
+    /*
+    background:rgba(0,0,0,0.1);
+    */
+
+}
+.content-mensajes::-webkit-scrollbar-thumb{
+
+    border-radius: 10px;
+    /*background: linear-gradient(45deg,red,orange);
+*/
+background: url('https://66.media.tumblr.com/3301a13ac3fcadfba8ccb2d6682e7701/tumblr_mmsbznkKXL1rx5rfmo1_500.gifv');
+}
