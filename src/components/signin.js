@@ -19,8 +19,9 @@ export default class signin extends Component {
         IniciarSesion(e){
             e.preventDefault();
             const {email,password}=this.state;
-            fetch("https://serverchatexample01.herokuapp.com/signin",{
-                method:"POST",
+           // fetch("https://serverchatexample01.herokuapp.com/signin",{
+         fetch("https://serverchatexample01.herokuapp.com/signin",{
+           method:"POST",
                 headers:{
                     "Content-Type":"application/json"
                 },
@@ -66,7 +67,7 @@ export default class signin extends Component {
                         <div className="card-body text-center">
                             <form onSubmit={this.IniciarSesion.bind(this)}>
                                 <div className="form-group">
-                                    <input type="email" placeholder="Ingresa tu correo" name="email" onChange={this.ChangeState.bind(this)} required className="mt-3 form-control" />
+                                    <input type="email" placeholder="Ingresa tu correo" name="email" onChange={this.ChangeState.bind(this)} required className="mt-3 form-control"  autoComplete="off"/>
                                 </div>
             
                                 <div className="form-group">
