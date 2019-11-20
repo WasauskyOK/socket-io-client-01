@@ -34,7 +34,7 @@ export default class signup extends Component {
         e.preventDefault();
         const {email,password}=this.state;
         //fetch("https://serverchatexample01.herokuapp.com/signup",{
-        fetch("http://localhost:5000/signup",{
+        fetch("https://serverchatexample01.herokuapp.com/signup",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

@@ -142,7 +142,7 @@ export default class  Globalchat extends Component {
     componentDidMount(){
        
         //this.clientIO=ClientIO("https://serverchatexample01.herokuapp.com/");
-        this.clientIO=ClientIO("http://localhost:5000/");
+        this.clientIO=ClientIO("https://serverchatexample01.herokuapp.com/");
         this.UpdateStateOffLineOnLine();
         this.clientIO.emit('updatestatusoffline',{opcion:"refreshstatuslist"});
         this.clientIO.on('updateliststatus',async (data)=>{
@@ -186,16 +186,16 @@ export default class  Globalchat extends Component {
 
     async UpdateStateOffLineOnLine(){
         const email=window.localStorage.getItem("correoactivo");
-        const  data=await fetch(`http://localhost:5000/liststatususer/${email}`);
+        const  data=await fetch(`https://serverchatexample01.herokuapp.com/${email}`);
         const StatusUsers=await  data.json();
         this.setState({StatusUsers});
 
     }
 
     async UpdateMessages(){
-       // const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
+        const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
        //const method=await  fetch('https://serverchatexample01.herokuapp.com/viewmessages');
-       const method=await  fetch('http://localhost:5000/viewmessages');
+       //const method=await  fetch('http://localhost:5000/viewmessages');
        
        const  Messages=await  method.json();
         this.setState({Messages});
