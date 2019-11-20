@@ -31,7 +31,7 @@ export default class principal extends Component {
             
             <div>
                 <h1>Bienvenido al ejemplo chat de prueba</h1>
-                <p>Contact : daniechoque159@gmail.com </p>
+                <p>Contacto : daniechoque159@gmail.com </p>
                 <p>Github : WasauskyOK</p>
                 <p>Localizacion de Investigación</p>
                 <div style={{width:"100vw",display:"flex"}}>
