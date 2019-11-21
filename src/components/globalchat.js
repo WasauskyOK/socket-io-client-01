@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import  ClientIO from 'socket.io-client';
 import  MessagesTotal from './messagestotal';
 import M from 'materialize-css';
@@ -140,7 +140,7 @@ export default class  Globalchat extends Component {
     }
     mensaje=React.createRef();
     componentDidMount(){
-       
+        // window.scrollTo(0,20);
         //this.clientIO=ClientIO("https://serverchatexample01.herokuapp.com/");
         this.clientIO=ClientIO("https://serverchatexample01.herokuapp.com/");
         this.UpdateStateOffLineOnLine();
@@ -163,7 +163,7 @@ export default class  Globalchat extends Component {
         // this.clientIO.on('gretting',(data)=>{
         //     console.log("Saludo  : "+data.message);
         // });
-       
+        
     }
     // async ConfigurateStatus(){
       
@@ -272,13 +272,13 @@ export default class  Globalchat extends Component {
         }; 
         return (
 
-            <div className="container">
+            <div className="fondoPantalla">
            
               <div>
-                  <div className="d-flex bd-highlight bg-danger  mb-3 ">
+                  <div className="d-flex bd-highlight bg-danger  mb-3">
                           <div className="mr-auto p-2 "><Link className="nav-link text-white" to="/profile">Usuario  Activo : {window.localStorage.getItem("correoactivo")}</Link></div>
                         <div className="p-2 bd-highlight">
-                            <button className="btn btn-danger text-white" onClick={this.CerrarSesion.bind(this)} >Cerrar Sesion</button>
+                            <button className="btn  btn-danger text-white text-center" style={{height:"70px"}} onClick={this.CerrarSesion.bind(this)} >Cerrar Sesion</button>
                         </div>
 
                 </div>
@@ -300,26 +300,34 @@ export default class  Globalchat extends Component {
                     </div>
                     
                 </div>
-          <div className="" style={{width:"100vw"}}>
-            
-                 <div className="col-4">
-                 <ListUsersStatus arregloListaUsuarios={this.state.StatusUsers}/>
-                 </div>
-                 <div className="col-8">
-                 <MessagesTotal ArrayMessages={this.state.Messages}/>
-                 </div>
 
-             
-          </div>
+
+                            {
+                                /*
+                                    BLOQUE  INICIAL DE  CHAT  +LISTA DE USUARIOS CONECTADOS Y DESCONECTADOS
+                                */
+                            }
+           <div className=" fondoPantalla mx-2">
+                <div className="card-body">
+                    <div className="row px-lg-2 px-2">
+                        <ListUsersStatus arregloListaUsuarios={this.state.StatusUsers}/>
+                         <MessagesTotal ArrayMessages={this.state.Messages}/>
+                    </div>
+                </div>
+            </div>
                  
                
-               
+               {
+                   /*
+                        BLOQUE TERMINADO DE CHAT + LISTA DE USUARIOS 
+                   */
+               }
                
                 <div className="row">
                     <div className="col-12">
                         <div style={{height:"15vh"}} className="form-group">
                              <form className="d-flex align-items-center" onSubmit={this.GoMessage.bind(this)}>      
-                            <textarea style={{height:"100%"}} cols="20"  name="msj" ref={this.mensaje} onChange={this.Changevars.bind(this)} className="form-control  mr-5">
+                            <textarea style={{height:"100%"}} cols="20"  name="msj" ref={this.mensaje} onChange={this.Changevars.bind(this)} className="form-control  mr-5" placeholder="Escribe algo :D">
                             </textarea>
                             <button type="submit" style={this.detailsbutton()} className="btn btn-success col-3 font-weight-bold">Go</button>
                             </form>

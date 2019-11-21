@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import '../styles/style.css'
+import '../styles/style.css';
+//import '../configurationdom/configmessages';
 export default class Messagestotal extends Component {
     
     StylesGroup(){
@@ -12,11 +13,11 @@ export default class Messagestotal extends Component {
     render() {
         return (
             
-                <div className="list-group content-mensajes" style={this.StylesGroup()}>
+                <div className="list-group content-mensajes col-md-6" style={this.StylesGroup()} id="scrollMensajes">
                    {
                        this.props.ArrayMessages.map((item,i)=>{
                         return(
-                            <div  className="list-group-item list-group-item-action active mb-2 bg-dark" key={i}>
+                            <div  className="list-group-item list-group-item-action active mb-2 bg-white text-dark border-white radius-5 rounded" key={i}>
                             <div className="d-flex w-100 justify-content-between">
                                    {
                                        (item.email===window.localStorage.getItem("correoactivo"))?
