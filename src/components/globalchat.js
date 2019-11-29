@@ -4,6 +4,7 @@ import  MessagesTotal from './messagestotal';
 import M from 'materialize-css';
 import {Redirect,Link} from 'react-router-dom';
 import  ListUsersStatus  from './StatusUsersTotal';
+import  audiomessage from '../audios/WhatsApp Mensaje Recibido.mp3';
 //import   'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css';
 
 //import { makeStyles } from '@material-ui/core/styles';
@@ -138,6 +139,7 @@ export default class  Globalchat extends Component {
         //React.createRef("nombre");
         
     }
+    audiomessage=React.createRef();
     mensaje=React.createRef();
     componentDidMount(){
         // window.scrollTo(0,20);
@@ -151,12 +153,15 @@ export default class  Globalchat extends Component {
             }
         })
        // this.ConfigurateStatus();//actualizar estados
-        this.clientIO.on("messageBroadcast",(data)=>{
+        this.clientIO.on("messageBroadcast",async (data)=>{
             
             if(data.status==="Running"){
                
-                 this.UpdateMessages();
                 
+                await  M.toast({html:`Existe  un nuevo mensaje , Revisalo !!!`});
+                 
+               await  this.audiomessage.current.play();
+                 this.UpdateMessages();
             }
         });
         this.UpdateMessages();
@@ -273,7 +278,7 @@ export default class  Globalchat extends Component {
         return (
 
             <div className="fondoPantalla">
-           
+           <audio src={audiomessage} controls ref={this.audiomessage} hidden></audio>
               <div>
                   <div className="d-flex bd-highlight bg-danger  mb-3">
                           <div className="mr-auto p-2 "><Link className="nav-link text-white" to="/profile">Usuario  Activo : {window.localStorage.getItem("correoactivo")}</Link></div>
@@ -290,6 +295,7 @@ export default class  Globalchat extends Component {
                 <div className="alert alert-primary mt-3 text-center bg-dark text-white"  role="alert">
                      <p>Example simple chat global (WasauskyOK)</p>
                      <p>contact : daniechoque159@gmail.com </p>
+                    
                 </div>
                
                 <div className="row">
