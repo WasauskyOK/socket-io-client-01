@@ -13,7 +13,7 @@ export default class Messagestotal extends Component {
     render() {
         return (
             
-                <div className="list-group content-mensajes col-md-6" style={this.StylesGroup()} id="scrollMensajes">
+                <div className="list-group content-mensajes col-md-6 listamensajestotales" style={this.StylesGroup()} id="scrollMensajes">
                    {
                        this.props.ArrayMessages.map((item,i)=>{
                         return(
