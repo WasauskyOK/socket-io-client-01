@@ -161,14 +161,15 @@ export default class  Globalchat extends Component {
                 await  M.toast({html:`Existe  un nuevo mensaje , Revisalo !!!`});
                  
                await  this.audiomessage.current.play();
-                 this.UpdateMessages();
+                 await this.UpdateMessages();
+                 this.scrolling();
             }
         });
         this.UpdateMessages();
         // this.clientIO.on('gretting',(data)=>{
         //     console.log("Saludo  : "+data.message);
         // });
-        
+        this.scrolling();
     }
     // async ConfigurateStatus(){
       
@@ -205,7 +206,7 @@ export default class  Globalchat extends Component {
        const  Messages=await  method.json();
         this.setState({Messages});
         console.log(this.state);
-
+        this.scrolling();
     }
     async GoMessage(e){
         e.preventDefault();
@@ -270,6 +271,19 @@ export default class  Globalchat extends Component {
           this.props.history.push('/signin');
           //window.location.href="/signin";
       }
+
+      scrolling = () =>{
+          const element=document.querySelector(".listamensajestotales");
+            //element.style.backgroundColor="blue";
+                // baja el scroll principal a una area visible
+          //element.scrollIntoView({block: "end", behavior: "smooth"});
+            //const altura=element.clientHeight;
+                //const altura=element.offsetHeight;
+            const altura=element.scrollHeight;
+            //alert(altura);
+            element.scrollTop=altura;
+      }
+
     render() {
         if(localStorage.getItem("setAuthenticated")===null){
             console.log("gaaaa");
